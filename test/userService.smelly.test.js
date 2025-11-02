@@ -1,8 +1,5 @@
-// tests/userService.clean.test.js
-
 const { UserService } = require('../src/userService');
 
-// Dados mockados são movidos para o topo para fácil referência
 const dadosUsuarioComum = {
   nome: 'Fulano de Tal',
   email: 'fulano@teste.com',
@@ -24,7 +21,7 @@ describe('UserService - Suíte de Testes Limpa (Clean)', () => {
     userService = new UserService();
     userService._clearDB(); // Limpa o "banco" para cada teste
   });
-  
+
   test('deve criar um novo usuário com sucesso', () => {
     // Arrange (Organizar)
     const { nome, email, idade } = dadosUsuarioComum;
@@ -48,8 +45,6 @@ describe('UserService - Suíte de Testes Limpa (Clean)', () => {
     const idade = 17;
 
     // Act & Assert
-    // Usamos .toThrow() para garantir que o teste falhe se a exceção NÃO for lançada.
-    // Isso corrige o "falso positivo" do try/catch no arquivo smelly.
     expect(() => {
       userService.createUser(nome, email, idade);
     }).toThrow('O usuário deve ser maior de idade.');
@@ -112,7 +107,7 @@ describe('UserService - Suíte de Testes Limpa (Clean)', () => {
       dadosUsuarioAdmin.nome,
       dadosUsuarioAdmin.email,
       dadosUsuarioAdmin.idade,
-      true // isAdmin
+      true 
     );
 
     // Act
@@ -133,8 +128,6 @@ describe('UserService - Suíte de Testes Limpa (Clean)', () => {
     const relatorio = userService.generateUserReport();
 
     // Assert
-    // Teste robusto: verificamos o *comportamento* (conter os dados)
-    // e não a *implementação* (formatação exata). 
     expect(relatorio).toContain('--- Relatório de Usuários ---');
     expect(relatorio).toContain(`ID: ${usuario1.id}, Nome: Alice, Status: ativo`);
     expect(relatorio).toContain(`ID: ${usuario2.id}, Nome: Bob, Status: ativo`);
@@ -142,7 +135,6 @@ describe('UserService - Suíte de Testes Limpa (Clean)', () => {
 
   test("deve gerar um relatório de 'Nenhum usuário' quando o banco está vazio", () => {
     // Arrange
-    // O beforeEach() já limpou o banco
 
     // Act
     const relatorio = userService.generateUserReport();
